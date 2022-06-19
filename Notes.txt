@@ -1,0 +1,26 @@
+Call below from root (where this file is). Change <ModuleName>. Not sure, but -n"hum" makes file names bumpy... bumpy doesn't!
+
+ruby -d Unity\auto\generate_module.rb -n"hum" -p"src" -i"include" -s"src" -t"test" <ModuleName>
+
+Including usage here for ease of use:
+---
+Usage: ruby generate_module [options] module_name
+  -i"include" sets the path to output headers to 'include' (DEFAULT ../src) 
+  -s"../src"  sets the path to output source to '../src'   (DEFAULT ../src) 
+  -t"C:/test" sets the path to output source to 'C:/test'  (DEFAULT ../test)
+  -p"MCH"     sets the output pattern to MCH.
+              dh   - driver hardware.
+              dih  - driver interrupt hardware.
+              mch  - model conductor hardware.
+              mvp  - model view presenter.
+              src  - just a source module, header and test. (DEFAULT)       
+              test - just a test file.
+  -d          destroy module instead of creating it.
+  -n"camel"   sets the file naming convention.
+              bumpy - BumpyCaseFilenames.
+              camel - camelCaseFilenames.
+              snake - snake_case_filenames.
+              caps  - CAPS_CASE_FILENAMES.
+  -u          update subversion too (requires subversion command line)      
+  -y"my.yml"  selects a different yaml config file for module generation
+---
