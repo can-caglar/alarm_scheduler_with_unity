@@ -5,13 +5,30 @@
 #include "MyAlarm.h"
 #include "Spy_MyInterrupt.h"
 #include "Spy_FakeFunctionsToCall.h"
+#include <stdio.h>
 
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
 extern void test_MyAlarm_100ms_ping_registered_at_boot(void);
-extern void test_MyAlarm_NoActionRegistered(void);
-extern void test_MyAlarm_RegisteredActionGetsCalled(void);
+extern void test_MyAlarm_NoActionRegisteredCallsNothing(void);
+extern void test_MyAlarm_RegisteredActionOnlyCalledWhenPeriodIsRight_MultipleOf100();
+extern void test_MyAlarm_IfPeriodLessThan100ItIsCalledAlways();
+extern void test_MyAlarm_RegisteredActionPeriodAssumedToBeCeilingIfNotMultipleOf100();
+extern void test_MyAlarm_FirstFunctionCallDelayedCorrectlyBasedOnArgument_DelayMultiple100();
+extern void test_MyAlarm_WhenDelayIsLessThanPingTimeDelayIsIgnored();
+extern void test_MyAlarm_WhenDelayIsNotMultipleOf100ItsRoundedUp();
+extern void test_BadParametersAddNothingAndReturnError_Function0();
+extern void test_BadParametersAddNothingAndReturnError_NegativePeriod();
+extern void test_BadParametersAddNothingAndReturnError_NegativeDelay();
+extern void test_MultipleActionsCanBeAdded();
+extern void test_ActionDeleteDoesNothingIfFunctionNotFound();
+extern void test_ActionDeleteDoesNothingIfPeriodDoesntMatch();
+extern void test_ActionDeleteDoesNothingIfFirstDelayDoesntMatch();
+extern void test_ActionDeletesIfAll3ParamsMatch();
+extern void test_AddMoreActionsThanMaxDoesNothing();
+extern void test_RemovedAlarmReservesSpaceForMore();
+extern void test_WhenAlarmIsRemovedNewOnesTakeItsPlace();
 
 
 /*=======Mock Management=====*/
@@ -73,9 +90,25 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
 int main(void)
 {
   UnityBegin("test/alarm/TestMyAlarm.c");
-  run_test(test_MyAlarm_100ms_ping_registered_at_boot, "test_MyAlarm_100ms_ping_registered_at_boot", 15);
-  run_test(test_MyAlarm_NoActionRegistered, "test_MyAlarm_NoActionRegistered", 21);
-  run_test(test_MyAlarm_RegisteredActionGetsCalled, "test_MyAlarm_RegisteredActionGetsCalled", 27);
+  run_test(test_MyAlarm_100ms_ping_registered_at_boot, "test_MyAlarm_100ms_ping_registered_at_boot", 35);
+  run_test(test_MyAlarm_NoActionRegisteredCallsNothing, "test_MyAlarm_NoActionRegisteredCallsNothing", 41);
+  run_test(test_MyAlarm_RegisteredActionOnlyCalledWhenPeriodIsRight_MultipleOf100, "test_MyAlarm_RegisteredActionOnlyCalledWhenPeriodIsRight_MultipleOf100", 47);
+  run_test(test_MyAlarm_IfPeriodLessThan100ItIsCalledAlways, "test_MyAlarm_IfPeriodLessThan100ItIsCalledAlways", 54);
+  run_test(test_MyAlarm_RegisteredActionPeriodAssumedToBeCeilingIfNotMultipleOf100, "test_MyAlarm_RegisteredActionPeriodAssumedToBeCeilingIfNotMultipleOf100", 61);
+  run_test(test_MyAlarm_FirstFunctionCallDelayedCorrectlyBasedOnArgument_DelayMultiple100, "test_MyAlarm_FirstFunctionCallDelayedCorrectlyBasedOnArgument_DelayMultiple100", 69);
+  run_test(test_MyAlarm_WhenDelayIsLessThanPingTimeDelayIsIgnored, "test_MyAlarm_WhenDelayIsLessThanPingTimeDelayIsIgnored", 78);
+  run_test(test_MyAlarm_WhenDelayIsNotMultipleOf100ItsRoundedUp, "test_MyAlarm_WhenDelayIsNotMultipleOf100ItsRoundedUp", 86);
+  run_test(test_BadParametersAddNothingAndReturnError_Function0, "test_BadParametersAddNothingAndReturnError_Function0", 96);
+  run_test(test_BadParametersAddNothingAndReturnError_NegativePeriod, "test_BadParametersAddNothingAndReturnError_NegativePeriod", 102);
+  run_test(test_BadParametersAddNothingAndReturnError_NegativeDelay, "test_BadParametersAddNothingAndReturnError_NegativeDelay", 108);
+  run_test(test_MultipleActionsCanBeAdded, "test_MultipleActionsCanBeAdded", 114);
+  run_test(test_ActionDeleteDoesNothingIfFunctionNotFound, "test_ActionDeleteDoesNothingIfFunctionNotFound", 126);
+  run_test(test_ActionDeleteDoesNothingIfPeriodDoesntMatch, "test_ActionDeleteDoesNothingIfPeriodDoesntMatch", 142);
+  run_test(test_ActionDeleteDoesNothingIfFirstDelayDoesntMatch, "test_ActionDeleteDoesNothingIfFirstDelayDoesntMatch", 158);
+  run_test(test_ActionDeletesIfAll3ParamsMatch, "test_ActionDeletesIfAll3ParamsMatch", 174);
+  run_test(test_AddMoreActionsThanMaxDoesNothing, "test_AddMoreActionsThanMaxDoesNothing", 190);
+  run_test(test_RemovedAlarmReservesSpaceForMore, "test_RemovedAlarmReservesSpaceForMore", 201);
+  run_test(test_WhenAlarmIsRemovedNewOnesTakeItsPlace, "test_WhenAlarmIsRemovedNewOnesTakeItsPlace", 213);
 
   return UnityEnd();
 }

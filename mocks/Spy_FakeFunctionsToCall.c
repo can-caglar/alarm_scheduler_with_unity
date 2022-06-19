@@ -1,4 +1,5 @@
 #include "Spy_FakeFunctionsToCall.h"
+#include <stdio.h>
 
 static void_fn lastFn;
 
